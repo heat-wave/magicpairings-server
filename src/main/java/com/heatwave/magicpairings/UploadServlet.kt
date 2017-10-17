@@ -49,7 +49,7 @@ class UploadServlet : HttpServlet() {
     }
 
     private fun postPairings(round: Round) {
-        val url = URL("https://magicpairings.firebaseio.com/user.json")
+        val url = URL("https://magicpairings.firebaseio.com/dci.json")
         val conn = url.openConnection() as HttpURLConnection
         conn.doOutput = true
         conn.setRequestProperty("X-HTTP-Method-Override", "PATCH")
@@ -57,8 +57,16 @@ class UploadServlet : HttpServlet() {
 
         val json = Json.createObjectBuilder()
         round.tables.forEach {
-            json.add(it.first.toString(), it.second)
-            json.add(it.second.toString(), it.first)
+            val firstPairing = Json.createObjectBuilder()
+            val secondPairing = Json.createObjectBuilder()
+            val firstOpponent = Json.createObjectBuilder().add("opponent", round.players[it.second].toString())
+                    .add("table", it.number).build()
+            val secondOpponent = Json.createObjectBuilder().add("opponent", round.players[it.first].toString())
+                    .add("table", it.number).build()
+            firstPairing.add("latestRound", firstOpponent)
+            secondPairing.add("latestRound", secondOpponent)
+            json.add(it.first.toString(), firstPairing.build())
+            json.add(it.second.toString(), secondPairing.build())
         }
 
         val writer = OutputStreamWriter(conn.outputStream)

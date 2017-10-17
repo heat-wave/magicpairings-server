@@ -11,13 +11,13 @@
 <!-- [START set_versions] -->
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.sdk.version>1.9.48</appengine.sdk.version>
+        <appengine.sdk.version>1.9.58</appengine.sdk.version>
 
         <objectify.version>5.1.5</objectify.version>
         <guava.version>18.0</guava.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.1.50</kotlin.version>
+        <kotlin.version>1.1.51</kotlin.version>
     </properties>
 
     <prerequisites>
